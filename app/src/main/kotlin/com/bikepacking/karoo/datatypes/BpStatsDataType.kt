@@ -63,7 +63,7 @@ class BpStatsDataType(
 
                     // ── WIERSZ 3: D+ DONE | D+ LEFT | TIME LEFT ────────────
                     v.setTextViewText(R.id.tv_ascent_done,
-                        if (state.ascentDoneM > 0) "${state.ascentDoneM}" else "--")
+                        if (state.ascentDoneM >= 0) "${state.ascentDoneM}" else "--")
 
                     v.setTextViewText(R.id.tv_ascent_left,
                         if (state.hasRoute) "${state.ascentLeftM}" else "--")
@@ -79,8 +79,10 @@ class BpStatsDataType(
                     v.setTextViewText(R.id.tv_fluid,
                         if (state.fluidLPerH > 0f) "%.2f".format(state.fluidLPerH) else "--")
 
-                    val stoppedMin = ((state.elapsedSec - state.movingSec) / 60L).coerceAtLeast(0L)
-                    v.setTextViewText(R.id.tv_stopped, "$stoppedMin")
+                    val elapsed = normalizeDisplayTimeSec(state.elapsedSec)
+                    val moving = normalizeDisplayTimeSec(state.movingSec)
+                    val stoppedSec = (elapsed - moving).coerceAtLeast(0L)
+                    v.setTextViewText(R.id.tv_stopped, formatTime(stoppedSec))
 
                     // ── WIERSZ 5: RIDE RESERVE | TODAY FACTOR ─────────────
                     val reserve = state.rideReservePercent
@@ -125,10 +127,14 @@ class BpStatsDataType(
         else          -> Color.parseColor("#EF4444")   // czerwony — opary
     }
 
-    // ── Formatowanie czasu h:mm lub mm min ────────────────────────────────────
+    private fun normalizeDisplayTimeSec(value: Long): Long {
+        return if (value > 600_000L) value / 1000L else value
+    }
+
+    // ── Formatowanie czasu h:mm ───────────────────────────────────────────────
     private fun formatTime(sec: Long): String {
         val h = sec / 3600
         val m = (sec % 3600) / 60
-        return if (h > 0) "${h}:${m.toString().padStart(2, '0')}" else "${m}min"
+        return "${h}:${m.toString().padStart(2, '0')}"
     }
 }

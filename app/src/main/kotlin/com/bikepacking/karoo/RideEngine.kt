@@ -1,9 +1,11 @@
 package com.bikepacking.karoo
 
 import android.content.Context
+import android.util.Log
 import io.hammerhead.karooext.KarooSystemService
 import io.hammerhead.karooext.models.DataType
 import io.hammerhead.karooext.models.OnStreamState
+import io.hammerhead.karooext.models.OnNavigationState
 import io.hammerhead.karooext.models.StreamState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -28,6 +30,7 @@ class RideEngine(
     @Volatile private var gradePercent = 0f
     @Volatile private var distanceM = 0f
     @Volatile private var remainingM = 0f
+    @Volatile private var onRoute = false
     @Volatile private var elapsedSec = 0L
     @Volatile private var movingSec = 0L
     @Volatile private var movingSecManual = 0L
@@ -45,10 +48,16 @@ class RideEngine(
     @Volatile private var windSpeedMs = 0f
     @Volatile private var headwindBearingDeg = -1f
 
-    @Volatile private var lastAltitude = 0f
-    @Volatile private var altitudeInitialized = false
     @Volatile private var ascentDoneM = 0
-    @Volatile private var ascentLeftM = 0
+    @Volatile private var ascentLeftFromStreamM: Int? = null
+    @Volatile private var ascentLeftFromRouteM = 0
+    @Volatile private var routeDistanceM = 0.0
+    @Volatile private var routeClimbs: List<OnNavigationState.NavigationState.Climb> = emptyList()
+    @Volatile private var routeAscentTotalM = 0
+
+    private enum class TimeUnitMode { UNKNOWN, SECONDS, MILLIS }
+    @Volatile private var elapsedTimeMode = TimeUnitMode.UNKNOWN
+    @Volatile private var movingTimeMode = TimeUnitMode.UNKNOWN
 
     @Volatile private var readiness = ReadinessManager.loadCached(context)
 
@@ -66,9 +75,9 @@ class RideEngine(
             }
         }
 
-        addStream(DataType.Type.SPEED)                    { v, _ -> speedKph = (v * 3.6).toFloat() }
-        addStream(DataType.Type.HEART_RATE)               { v, _ -> heartRate = v.toInt() }
-        addStream(DataType.Type.POWER)                    { v, nowMs ->
+        addStream(DataType.Type.SPEED)        { v, _ -> speedKph = (v * 3.6).toFloat() }
+        addStream(DataType.Type.HEART_RATE)   { v, _ -> heartRate = v.toInt() }
+        addStream(DataType.Type.POWER)        { v, nowMs ->
             powerWatts = v.toInt()
             power10mHistory.addLast(nowMs to powerWatts)
             while (power10mHistory.isNotEmpty() && power10mHistory.first().first < nowMs - 600_000L)
@@ -77,20 +86,64 @@ class RideEngine(
             while (power30mHistory.isNotEmpty() && power30mHistory.first().first < nowMs - 1_800_000L)
                 power30mHistory.removeFirst()
         }
-        addStream(DataType.Type.CADENCE)                  { v, nowMs ->
+        addStream(DataType.Type.CADENCE)      { v, nowMs ->
             cadenceRpm = v.toInt()
             cadence30sHistory.addLast(nowMs to cadenceRpm)
             while (cadence30sHistory.isNotEmpty() && cadence30sHistory.first().first < nowMs - 30_000L)
                 cadence30sHistory.removeFirst()
         }
-        addStream(DataType.Type.GRADE)                    { v, _ -> gradePercent = v.toFloat() }
-        addStream(DataType.Type.DISTANCE)                 { v, _ -> distanceM = v.toFloat() }
-        addStream(DataType.Type.ELAPSED_TIME)             { v, _ -> elapsedSec = v.toLong() }
-        addStream(DataType.Type.DISTANCE_TO_DESTINATION)  { v, _ -> remainingM = v.toFloat() }
-        addStream("ELAPSED_MOVING_TIME")                  { v, _ -> movingSec = v.toLong() }
-        addStream(DataType.Type.TEMPERATURE)              { v, _ -> temperatureCelsius = v.toFloat() }
-        addStream("TYPE_FRONT_GEAR_TEETH")                { v, _ -> frontTeeth = v.toInt() }
-        addStream("TYPE_REAR_GEAR_TEETH")                 { v, _ -> rearTeeth = v.toInt() }
+        addStream("TYPE_GRADE")               { v, _ -> gradePercent = v.toFloat() }
+        addStream(DataType.Type.DISTANCE)     { v, _ -> distanceM = v.toFloat() }
+        addStream(DataType.Type.ELAPSED_TIME) { v, _ -> elapsedSec = normalizeElapsedTimeToSec(v) }
+        addStream("ELAPSED_MOVING_TIME")      { v, _ -> movingSec = normalizeMovingTimeToSec(v) }
+        addStream(DataType.Type.TEMPERATURE)  { v, _ -> temperatureCelsius = v.toFloat() }
+        addStream("TYPE_FRONT_GEAR_TEETH")    { v, _ -> frontTeeth = v.toInt() }
+        addStream("TYPE_REAR_GEAR_TEETH")     { v, _ -> rearTeeth = v.toInt() }
+
+        // Dystans do celu — dane w values map, nie w singleValue
+        addStreamFull(DataType.Type.DISTANCE_TO_DESTINATION) { dp ->
+            Log.d(TAG, "DISTANCE_TO_DESTINATION values=${dp.values}")
+            dp.values["FIELD_DISTANCE_TO_DESTINATION_ID"]?.let { remainingM = it.toFloat() }
+            dp.values["FIELD_ON_ROUTE_ID"]?.let { onRoute = it == 1.0 }
+        }
+
+        // Przewyższenie pozostałe — gotowy stream Karoo, jeśli aktywna trasa go udostępnia
+        addStreamFull(DataType.Type.ELEVATION_REMAINING) { dp ->
+            Log.d(TAG, "ELEVATION_REMAINING values=${dp.values}")
+            dp.values["FIELD_ASCENT_REMAINING_ID"]?.let { ascentLeftFromStreamM = it.toInt() }
+            dp.values["FIELD_ELEVATION_REMAINING_ID"]?.let { ascentLeftFromStreamM = it.toInt() }
+        }
+
+        // Przewyższenie pozostałe — fallback z oficjalnego NavigationState/climbs
+        karooSystem.addConsumer<OnNavigationState> { event ->
+            when (val navState = event.state) {
+                is OnNavigationState.NavigationState.NavigatingRoute -> {
+                    onRoute = true
+                    routeDistanceM = navState.routeDistance
+                    routeClimbs = navState.climbs
+                    routeAscentTotalM = navState.climbs.sumOf { it.totalElevation }.roundToInt().coerceAtLeast(0)
+                    if (remainingM <= 0f && routeDistanceM > 0.0) remainingM = routeDistanceM.toFloat()
+                    ascentLeftFromRouteM = calculateAscentLeftFromClimbs()
+                    Log.d(TAG, "NAV NavigatingRoute distance=$routeDistanceM climbs=${routeClimbs.size} ascentTotal=$routeAscentTotalM ascentLeftRoute=$ascentLeftFromRouteM")
+                }
+                is OnNavigationState.NavigationState.NavigatingToDestination -> {
+                    onRoute = true
+                    routeClimbs = navState.climbs
+                    routeAscentTotalM = navState.climbs.sumOf { it.totalElevation }.roundToInt().coerceAtLeast(0)
+                    ascentLeftFromRouteM = calculateAscentLeftFromClimbs()
+                    Log.d(TAG, "NAV NavigatingToDestination climbs=${routeClimbs.size} ascentTotal=$routeAscentTotalM ascentLeftRoute=$ascentLeftFromRouteM")
+                }
+                is OnNavigationState.NavigationState.Idle -> {
+                    onRoute = false
+                    routeDistanceM = 0.0
+                    routeClimbs = emptyList()
+                    ascentLeftFromStreamM = null
+                    ascentLeftFromRouteM = 0
+                    routeAscentTotalM = 0
+                    Log.d(TAG, "NAV Idle")
+                }
+            }
+        }
 
         addStreamFull(DataType.Type.LOCATION) { dp ->
             dp.values["lat"]?.let { lat = it }
@@ -103,10 +156,10 @@ class RideEngine(
         addStream("TYPE_EXT::karoo-headwind::windSpeed")     { v, _ -> windSpeedMs = v.toFloat() }
         addStream("TYPE_EXT::karoo-headwind::headwind")      { v, _ -> headwindBearingDeg = v.toFloat() }
 
-        addStream("ALTITUDE") { v, _ ->
-            val alt = v.toFloat()
-            if (!altitudeInitialized) { lastAltitude = alt; altitudeInitialized = true }
-            else { val d = alt - lastAltitude; if (d > 2f) ascentDoneM += d.toInt(); lastAltitude = alt }
+        // Przewyższenie zrealizowane — gotowy licznik Karoo, nie liczenie z surowej wysokości
+        addStream(DataType.Type.ELEVATION_GAIN) { v, _ ->
+            ascentDoneM = v.toInt()
+            Log.d(TAG, "ELEVATION_GAIN value=$v ascentDoneM=$ascentDoneM")
         }
 
         scope.launch { while (isActive) { updateState(); delay(1_000L) } }
@@ -125,6 +178,51 @@ class RideEngine(
             val s = event.state as? StreamState.Streaming ?: return@addConsumer
             onDataPoint(s.dataPoint)
         }
+    }
+
+    private fun normalizeElapsedTimeToSec(v: Double): Long {
+        val raw = v.toLong()
+        elapsedTimeMode = detectTimeUnit(raw, elapsedTimeMode)
+        return if (elapsedTimeMode == TimeUnitMode.MILLIS) raw / 1000L else raw
+    }
+
+    private fun normalizeMovingTimeToSec(v: Double): Long {
+        val raw = v.toLong()
+        movingTimeMode = detectTimeUnit(raw, movingTimeMode)
+        return if (movingTimeMode == TimeUnitMode.MILLIS) raw / 1000L else raw
+    }
+
+    private fun detectTimeUnit(raw: Long, currentMode: TimeUnitMode): TimeUnitMode {
+        if (currentMode != TimeUnitMode.UNKNOWN) return currentMode
+        if (raw <= 0L) return TimeUnitMode.UNKNOWN
+        return if (raw >= 1000L) TimeUnitMode.MILLIS else TimeUnitMode.SECONDS
+    }
+
+    private fun calculateAscentLeftFromClimbs(): Int {
+        val climbs = routeClimbs
+        if (climbs.isEmpty()) return 0
+
+        val progressM = if (routeDistanceM > 0.0 && remainingM > 0f) {
+            (routeDistanceM - remainingM.toDouble()).coerceAtLeast(0.0)
+        } else {
+            distanceM.toDouble().coerceAtLeast(0.0)
+        }
+
+        return climbs.sumOf { climb ->
+            val startM = climb.startDistance
+            val lengthM = climb.length.coerceAtLeast(1.0)
+            val endM = startM + lengthM
+            val elevationM = climb.totalElevation
+
+            when {
+                progressM <= startM -> elevationM
+                progressM >= endM -> 0.0
+                else -> {
+                    val remainingFraction = ((endM - progressM) / lengthM).coerceIn(0.0, 1.0)
+                    elevationM * remainingFraction
+                }
+            }
+        }.roundToInt().coerceAtLeast(0)
     }
 
     private fun windArrow(d: Float): String {
@@ -146,7 +244,9 @@ class RideEngine(
         val nowMs = System.currentTimeMillis()
         val distanceKm = distanceM / 1000f
         val remainingKm = remainingM / 1000f
-        val hasRoute = remainingM > 0f
+        val hasRoute = onRoute || remainingM > 0f || routeDistanceM > 0.0 || routeClimbs.isNotEmpty() || ascentLeftFromStreamM != null
+        ascentLeftFromRouteM = calculateAscentLeftFromClimbs()
+        val ascentLeftM = ascentLeftFromStreamM ?: ascentLeftFromRouteM.takeIf { it > 0 } ?: routeAscentTotalM
         val isMoving = speedKph > 1.0f
 
         if (isMoving) movingSecManual++
@@ -167,9 +267,17 @@ class RideEngine(
         val cad30s = if (cadence30sHistory.isNotEmpty())
             cadence30sHistory.map { it.second }.average().toInt() else cadenceRpm
 
-        val twilightMs     = SunCalculator.civilTwilightMs(lat, lon, nowMs)
-        val deadlineMs     = minOf(settings.deadlineTodayMs(), twilightMs)
-        val predictedSpeed = if (smartAvg > 0f) smartAvg else speedKph
+        val twilightMs = SunCalculator.civilTwilightMs(lat, lon, nowMs)
+        val deadlineMs = minOf(settings.deadlineTodayMs(), twilightMs)
+
+        // Prędkość predykowana: minimum 60s ruchu, fallback na bieżącą jeśli avg zbyt niska
+        val predictedSpeed = when {
+            effectiveMovingSec < 60L -> 0f          // za mało danych — nie pokazuj ETA
+            smartAvg >= 3f           -> smartAvg    // normalny przypadek
+            speedKph >= 3f           -> speedKph    // avg jeszcze niska, użyj bieżącej
+            else                     -> 0f
+        }
+
         val etaMs          = if (hasRoute && predictedSpeed > 0f)
             etaCalculator.calculateEtaMs(nowMs, remainingKm, distanceKm, predictedSpeed) else 0L
         val predictedStops = etaCalculator.predictedStopsSec(remainingKm, distanceKm)
@@ -198,7 +306,7 @@ class RideEngine(
             distanceKm       = distanceKm, remainingKm = remainingKm,
             elapsedSec       = elapsedSec, movingSec = effectiveMovingSec, hasRoute = hasRoute,
             np10Watts        = np10, if30Value = if30, ifValue = ifVal, cadenceAvg30sRpm = cad30s,
-            smartAvgKph      = smartAvgGross, smartAvgNetKph = smartAvgNet, speedTrend = trend,
+            smartAvgKph      = smartAvg, smartAvgNetKph = smartAvgNet, speedTrend = trend,
             etaTimestamp           = etaMs, requiredSpeedKph = requiredSpeed,
             deadlineTimestamp      = deadlineMs, civilTwilightTimestamp = twilightMs,
             stopRateMinPerKm       = predictedStops / 60f,
@@ -220,3 +328,5 @@ class RideEngine(
 
     fun stop() { scope.cancel(); statsCalc.reset() }
 }
+
+private const val TAG = "BikepackingRideEngine"
