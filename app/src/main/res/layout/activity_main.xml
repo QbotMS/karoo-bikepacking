@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#04080F">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Bikepacking ETA" android:textColor="#FFFFFF"
+            android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="2dp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Ustawienia" android:textColor="#8A96AD"
+            android:textSize="12sp" android:layout_marginBottom="20dp" />
+
+        <!-- DANE Z PI — kafelki 2 kolumny -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="DANE Z PI" android:textColor="#8A96AD"
+            android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.12"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:background="#090E1C"
+            android:padding="14dp" android:layout_marginBottom="4dp">
+
+            <!-- Wiersz 1: FTP | Today Factor -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="14dp">
+
+                <!-- FTP -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="FTP" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="bottom">
+                        <TextView android:id="@+id/tv_pi_ftp"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="--" android:textColor="#22C55E"
+                            android:textSize="28sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text=" W" android:textColor="#8A96AD"
+                            android:textSize="13sp" android:layout_marginBottom="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Separator -->
+                <View android:layout_width="1dp" android:layout_height="match_parent"
+                    android:background="#1A2236" android:layout_marginEnd="12dp"/>
+
+                <!-- Today Factor -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="TODAY FACTOR" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_pi_today"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="--" android:textColor="#FFFFFF"
+                        android:textSize="28sp" android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Separator poziomy -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="#1A2236" android:layout_marginBottom="14dp"/>
+
+            <!-- Wiersz 2: HRV | Sen -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="14dp">
+
+                <!-- HRV -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="HRV  dzis / 30d" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_pi_hrv"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="--" android:textColor="#FFFFFF"
+                        android:textSize="15sp" android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Separator -->
+                <View android:layout_width="1dp" android:layout_height="match_parent"
+                    android:background="#1A2236" android:layout_marginEnd="12dp"/>
+
+                <!-- Sen -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="SEN  dzis / 30d" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_pi_sleep"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="--" android:textColor="#FFFFFF"
+                        android:textSize="15sp" android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Separator -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="#1A2236" android:layout_marginBottom="14dp"/>
+
+            <!-- Wiersz 3: Cisnienie — pelna szerokosc -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:layout_marginBottom="14dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="CISNIENIE / ZMIANA 24H" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tv_pi_pressure"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--" android:textColor="#FFFFFF"
+                    android:textSize="15sp" android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Separator -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="#1A2236" android:layout_marginBottom="12dp"/>
+
+            <!-- Status + Odswierz -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:id="@+id/tv_pi_status"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Brak danych"
+                    android:textColor="#EF4444" android:textSize="12sp" />
+                <TextView android:id="@+id/btn_refresh_pi"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="ODSWIERZ" android:textColor="#0D1424"
+                    android:textSize="11sp" android:textStyle="bold"
+                    android:background="#22C55E"
+                    android:paddingStart="14dp" android:paddingEnd="14dp"
+                    android:paddingTop="8dp" android:paddingBottom="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="FTP aktualizowane automatycznie z Xert." android:textColor="#3A4560"
+            android:textSize="11sp" android:layout_marginBottom="20dp" />
+
+        <!-- ATMOSFERA -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="ATMOSFERA" android:textColor="#8A96AD"
+            android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.12"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:background="#090E1C" android:padding="14dp" android:layout_marginBottom="4dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="WRAZLIWOSC NA CISNIENIE" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Bole glowy przy nizach / spadku" android:textColor="#FFFFFF" android:textSize="14sp" />
+            </LinearLayout>
+            <CheckBox android:id="@+id/cb_baro_sensitive"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:checked="false" android:buttonTint="#22C55E" />
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_baro_info"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="" android:textColor="#F59E0B"
+            android:textSize="11sp" android:layout_marginBottom="20dp" />
+
+        <!-- DEADLINE -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="DEADLINE" android:textColor="#8A96AD"
+            android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.12"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:background="#090E1C"
+            android:padding="14dp" android:layout_marginBottom="2dp">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="GODZINA ZAKONCZENIA" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Kliknij aby zmienic" android:textColor="#3A4560" android:textSize="11sp"/>
+                </LinearLayout>
+                <TextView android:id="@+id/tv_deadline"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="19:00" android:textColor="#22C55E"
+                    android:textSize="26sp" android:textStyle="bold"
+                    android:paddingStart="14dp" android:paddingEnd="14dp"
+                    android:paddingTop="6dp" android:paddingBottom="6dp"
+                    android:background="#0F1929" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="OGRANICZ DO ZMIERZCHU" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_twilight_time"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="dzis: --:--" android:textColor="#FCD34D" android:textSize="13sp" />
+                </LinearLayout>
+                <CheckBox android:id="@+id/cb_cap_twilight"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:checked="true" android:buttonTint="#22C55E" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="AKTYWNY DEADLINE DZIS" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <TextView android:id="@+id/tv_active_deadline"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="19:00" android:textColor="#22C55E"
+                    android:textSize="22sp" android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="" android:layout_marginBottom="20dp" />
+
+        <!-- STREFY MOCY -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="STREFY MOCY" android:textColor="#8A96AD"
+            android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.12"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:background="#090E1C" android:padding="14dp" android:layout_marginBottom="4dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="FTP" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tv_ftp_source"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="recznie" android:textColor="#3A4560" android:textSize="11sp" />
+            </LinearLayout>
+            <EditText android:id="@+id/et_ftp"
+                android:layout_width="80dp" android:layout_height="wrap_content"
+                android:inputType="number" android:textColor="#22C55E"
+                android:textSize="22sp" android:textStyle="bold"
+                android:textAlignment="textEnd" android:background="@null"
+                android:hint="200" android:textColorHint="#2a3550" android:maxLength="4" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text=" W" android:textColor="#8A96AD" android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- STREFY TETNA -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="STREFY TETNA" android:textColor="#8A96AD"
+            android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.12"
+            android:layout_marginTop="16dp" android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:background="#090E1C" android:padding="14dp" android:layout_marginBottom="8dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="MAX HR" android:textColor="#8A96AD" android:textSize="10sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Tetno maksymalne" android:textColor="#3A4560" android:textSize="11sp" />
+            </LinearLayout>
+            <EditText android:id="@+id/et_maxhr"
+                android:layout_width="80dp" android:layout_height="wrap_content"
+                android:inputType="number" android:textColor="#EF4444"
+                android:textSize="22sp" android:textStyle="bold"
+                android:textAlignment="textEnd" android:background="@null"
+                android:hint="185" android:textColorHint="#2a3550" android:maxLength="3" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text=" bpm" android:textColor="#8A96AD" android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="32dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="Z1" android:textColor="#FFFFFF" android:textSize="10sp"
+                android:gravity="center" android:background="#3b3b3b" android:padding="5dp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="Z2" android:textColor="#FFFFFF" android:textSize="10sp"
+                android:gravity="center" android:background="#185fa5" android:padding="5dp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="Z3" android:textColor="#FFFFFF" android:textSize="10sp"
+                android:gravity="center" android:background="#4a7c2a" android:padding="5dp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="Z4" android:textColor="#FFFFFF" android:textSize="10sp"
+                android:gravity="center" android:background="#8a6800" android:padding="5dp" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="Z5" android:textColor="#FFFFFF" android:textSize="10sp"
+                android:gravity="center" android:background="#a32d2d" android:padding="5dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

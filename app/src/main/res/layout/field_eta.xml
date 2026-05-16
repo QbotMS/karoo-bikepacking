@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#04080F">
+
+    <!-- GÓRNY WIERSZ: DST | POZ | TEMP | BIEG -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- DST -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:text="DST"
+                android:textColor="#8A96AD"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_dst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="4dp"
+                android:text="0.0"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="2dp"
+                android:text="km"
+                android:textColor="#8A96AD"
+                android:textSize="8sp" />
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- POZ -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:text="POZ"
+                android:textColor="#8A96AD"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_poz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="2dp"
+                android:text="km"
+                android:textColor="#8A96AD"
+                android:textSize="8sp" />
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- TEMP -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:text="TEMP"
+                android:textColor="#8A96AD"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="4dp"
+                android:text="--°"
+                android:textColor="#7DD3FC"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="2dp"
+                android:text="°C"
+                android:textColor="#8A96AD"
+                android:textSize="8sp" />
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- BIEG -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:text="BIEG"
+                android:textColor="#8A96AD"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_gear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="2dp" android:background="#04080F" />
+
+    <!-- DOLNY WIERSZ: ETA (5) | TRZYMAJ (3) | CZASY (2) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- ETA: wartość u góry, obok status "+12 min" -->
+        <FrameLayout
+            android:id="@+id/cell_eta"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="#0F1929">
+
+            <!-- pasek koloru po lewej -->
+            <FrameLayout
+                android:id="@+id/eta_stripe"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="#22C55E" />
+
+            <!-- ETA czas + status obok siebie u góry -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_eta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--:--"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/tv_eta_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text=""
+                    android:textColor="#22C55E"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- ETA label u dołu -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="2dp"
+                android:layout_marginLeft="8dp"
+                android:text="ETA"
+                android:textColor="#8A96AD"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- TRZYMAJ: etykieta+unit u góry, wartość na dół-prawo -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:text="HOLD"
+                android:textColor="#8A96AD"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginTop="13dp"
+                android:text="km/h"
+                android:textColor="#8A96AD"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/tv_required"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- DEADLINE + ZMIERZCH -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="#090E1C"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚑ "
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/tv_deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--:--"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2a3550" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="☀ "
+                    android:textColor="#FCD34D"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/tv_twilight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--:--"
+                    android:textColor="#FCD34D"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

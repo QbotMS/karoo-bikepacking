@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0D1424">
+
+    <!-- WIERSZ 1: NP | IF | VI — ciemny granat -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:orientation="horizontal">
+
+        <!-- NP -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="NP" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_np"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="W" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- IF -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="IF" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_if"
+                android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                android:textStyle="bold" android:gravity="bottom" android:includeFontPadding="false"/>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- VI -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="VI" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_vi"
+                android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                android:textStyle="bold" android:gravity="bottom" android:includeFontPadding="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="2dp" android:background="#04080F"/>
+
+    <!-- WIERSZ 2: TSS | CALORIES | DECOUPLING -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:orientation="horizontal">
+
+        <!-- TSS -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1A2236"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="TSS" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_tss"
+                android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                android:textStyle="bold" android:gravity="bottom" android:includeFontPadding="false"/>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- CALORIES -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1A2236"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="CALORIES" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_calories"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="kcal" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- DECOUPLING — ciemny szary -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1E1E1E"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="DECOUPLING" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_decoupling"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#4ADE80" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="%" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="2dp" android:background="#04080F"/>
+
+    <!-- WIERSZ 3: D+ DONE | D+ LEFT | TIME LEFT -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:orientation="horizontal">
+
+        <!-- D+ DONE -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="D+ DONE" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_ascent_done"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="m" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- D+ LEFT -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="D+ LEFT" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_ascent_left"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="m" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- TIME LEFT -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1A2236"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="TIME LEFT" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_time_left"
+                android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                android:textStyle="bold" android:gravity="bottom" android:includeFontPadding="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="2dp" android:background="#04080F"/>
+
+    <!-- WIERSZ 4: CARBS | FLUID | STOPPED -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:orientation="horizontal">
+
+        <!-- CARBS -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1E1E1E"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="CARBS" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_carbs"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="g/h" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- FLUID -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1E1E1E"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="FLUID" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_fluid"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="l/h" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- STOPPED -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#1A2236"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="STOPPED" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                <TextView android:id="@+id/tv_stopped"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                    android:textStyle="bold" android:includeFontPadding="false"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:text="min" android:textColor="#8A96AD" android:textSize="8sp"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="2dp" android:background="#04080F"/>
+
+    <!-- WIERSZ 5: RIDE RESERVE | TODAY FACTOR — ciemny granat, 2 kolumny -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:orientation="horizontal">
+
+        <!-- RIDE RESERVE -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="RIDE RESERVE" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_reserve"
+                android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:text="--" android:textColor="#22C55E" android:textSize="26sp"
+                android:textStyle="bold" android:gravity="bottom" android:includeFontPadding="false"/>
+            <ProgressBar android:id="@+id/reserve_progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent" android:layout_height="6dp"
+                android:max="100" android:progress="0"
+                android:progressTint="#22C55E" android:progressBackgroundTint="#1A2236"/>
+        </LinearLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F"/>
+
+        <!-- TODAY FACTOR -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C"
+            android:orientation="vertical" android:padding="4dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="TODAY FACTOR" android:textColor="#8A96AD" android:textSize="8sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tv_today_factor"
+                android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:text="--" android:textColor="#FFFFFF" android:textSize="24sp"
+                android:textStyle="bold" android:gravity="bottom" android:includeFontPadding="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionInfo
+    id="bikepacking-eta"
+    displayName="@string/extension_name"
+    icon="@drawable/ic_bp">
+
+    <DataType
+        typeId="BP_LIVE"
+        displayName="BP Live"
+        description="Speed, power, HR, grade"
+        graphical="true"
+        icon="@drawable/ic_bp" />
+
+    <DataType
+        typeId="BP_ETA"
+        displayName="BP ETA"
+        description="ETA, smart avg, required speed"
+        graphical="true"
+        icon="@drawable/ic_bp" />
+
+    <DataType
+        typeId="BP_STATS"
+        displayName="BP Stats"
+        description="NP, TSS, Calories, Decoupling, Reserve"
+        graphical="true"
+        icon="@drawable/ic_bp" />
+
+</ExtensionInfo>

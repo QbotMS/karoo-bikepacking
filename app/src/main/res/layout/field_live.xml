@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#04080F">
+
+    <!-- GÓRNY WIERSZ: SPD | POWER | WIND -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <!-- SPEED -->
+        <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="SPD"
+                android:textColor="#8A96AD" android:textSize="7sp" android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="1dp" android:layout_marginRight="2dp"
+                android:text="00.0" android:textColor="#FFFFFF"
+                android:textSize="24sp" android:textStyle="bold" android:includeFontPadding="false" />
+            <LinearLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="avg " android:textColor="#8A96AD" android:textSize="9sp" />
+                <TextView android:id="@+id/tv_speed_avg"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="00.0-00.0" android:textColor="#FFFFFF"
+                    android:textSize="14sp" android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- POWER -->
+        <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="PW"
+                android:textColor="#8A96AD" android:textSize="7sp" android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_power"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="1dp" android:layout_marginRight="2dp"
+                android:paddingLeft="5dp" android:paddingRight="5dp"
+                android:text="000" android:textColor="#FFFFFF"
+                android:textSize="24sp" android:textStyle="bold" android:includeFontPadding="false" />
+            <!-- NP10 (przeniesiony z WIND) -->
+            <LinearLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginBottom="3dp" android:layout_marginLeft="3dp"
+                android:orientation="horizontal" android:gravity="bottom">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="NP" android:textColor="#8A96AD" android:textSize="9sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="10 " android:textColor="#8A96AD" android:textSize="7sp" />
+                <TextView android:id="@+id/tv_np10"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="000" android:textColor="#FFFFFF"
+                    android:textSize="14sp" android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- WIND -->
+        <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="W"
+                android:textColor="#8A96AD" android:textSize="7sp" android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/wind_box"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="1dp" android:layout_marginRight="2dp"
+                android:orientation="horizontal"
+                android:paddingLeft="4dp" android:paddingRight="4dp">
+                <TextView android:id="@+id/tv_wind_arrow"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="-" android:textColor="#FFFFFF"
+                    android:textSize="20sp" android:textStyle="bold"
+                    android:paddingRight="2dp" android:includeFontPadding="false" />
+                <TextView android:id="@+id/tv_wind_speed"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="00.0" android:textColor="#FFFFFF"
+                    android:textSize="20sp" android:textStyle="bold" android:includeFontPadding="false" />
+            </LinearLayout>
+            <!-- IF30 (przeniesiony z POWER) -->
+            <LinearLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginBottom="3dp" android:layout_marginLeft="3dp"
+                android:orientation="horizontal" android:gravity="bottom">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="IF" android:textColor="#8A96AD" android:textSize="9sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="30 " android:textColor="#8A96AD" android:textSize="7sp" />
+                <TextView android:id="@+id/tv_if30"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text=".00" android:textColor="#FFFFFF"
+                    android:textSize="14sp" android:textStyle="bold" />
+            </LinearLayout>
+            <!-- Wpływ wiatru — prawa strona dołu, bez etykiety -->
+            <TextView
+                android:id="@+id/tv_wind_impact"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="3dp" android:layout_marginRight="3dp"
+                android:text="0.0" android:textColor="#FFFFFF"
+                android:textSize="14sp" android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="2dp" android:background="#04080F" />
+
+    <!-- DOLNY WIERSZ: HR | CAD | W' | % -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- HR -->
+        <FrameLayout android:id="@+id/hr_cell"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="HR"
+                android:textColor="#B3FFFFFF" android:textSize="7sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tv_hr_zone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="4dp" android:layout_marginBottom="3dp"
+                android:text="Z0" android:textColor="#FFFFFF"
+                android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- CAD -->
+        <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="CAD"
+                android:textColor="#8A96AD" android:textSize="7sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tv_cadence"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="4dp" android:layout_marginBottom="3dp"
+                android:text="000" android:textColor="#FFFFFF"
+                android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- W' BALANCE: liczba 18sp + % 15sp -->
+        <FrameLayout android:id="@+id/wprime_cell"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="W'"
+                android:textColor="#8A96AD" android:textSize="7sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="4dp" android:layout_marginBottom="3dp"
+                android:orientation="horizontal" android:gravity="bottom">
+                <TextView android:id="@+id/tv_w_prime"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--" android:textColor="#22C55E"
+                    android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+                <TextView android:id="@+id/tv_w_prime_pct"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="" android:textColor="#22C55E"
+                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
+
+        <!-- GRADE: sign 15sp + liczba 18sp + % 15sp -->
+        <FrameLayout android:id="@+id/grade_cell"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:background="#090E1C">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="top|start" android:text="%"
+                android:textColor="#B3FFFFFF" android:textSize="7sp" android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="4dp" android:layout_marginBottom="3dp"
+                android:orientation="horizontal" android:gravity="bottom">
+                <TextView android:id="@+id/tv_grade_sign"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="+" android:textColor="#FFFFFF"
+                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false" />
+                <TextView android:id="@+id/tv_grade"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0.0" android:textColor="#FFFFFF"
+                    android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+                <TextView android:id="@+id/tv_grade_pct"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="%" android:textColor="#FFFFFF"
+                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>
