@@ -37,8 +37,12 @@ object ReadinessManager {
         val pressureDeficit: Float = 0f,
         val baroMultiplier: Float = 1.0f,
         val fetchTimestampMs: Long = 0L,
-        val partial: Boolean = false
-    )
+        val partial: Boolean = false,
+        val warningReasons: List<String> = emptyList(),
+    ) {
+        val profileComplete: Boolean
+            get() = warningReasons.isEmpty() && ftpWatts > 0f && fetchTimestampMs > 0L
+    }
 
     suspend fun fetch(context: Context): ReadinessData = withContext(Dispatchers.IO) {
         try {
@@ -50,10 +54,40 @@ object ReadinessManager {
             if (conn.responseCode != 200) {
                 Log.w(TAG, "Pi: kod ${conn.responseCode}"); return@withContext loadCached(context)
             }
-            val json = JSONObject(conn.inputStream.bufferedReader().readText())
+            val rawText = conn.inputStream.bufferedReader().readText()
             conn.disconnect()
+
+            val json = JSONObject(rawText)
             val sig = json.optJSONObject("signals")
-            val partial = json.optJSONArray("sources")?.toString()?.contains("partial") == true
+
+            // ── Diagnostic log: raw payload keys ──
+            val keys = json.keys().asSequence().toList()
+            Log.d(TAG, "[SETUP] raw payload keys: ${keys.joinToString(", ")}")
+
+            val ftpPresent = json.has("ftpWatts") && json.optDouble("ftpWatts", 0.0) > 0.0
+            val hrvPresent = sig != null && sig.has("hrvToday") && sig.optInt("hrvToday", 0) > 0
+
+            Log.d(TAG, "[SETUP] ftp present=$ftpPresent (${json.optDouble("ftpWatts", 0.0)})")
+            Log.d(TAG, "[SETUP] hrv present=$hrvPresent (${sig?.optInt("hrvToday", 0)})")
+            Log.d(TAG, "[SETUP] partial=${json.optJSONArray("sources")?.toString()?.contains("partial")}")
+            
+            // ── HRV / Sleep diagnostic ──
+            val nowMs = System.currentTimeMillis()
+            Log.d("QBOT_SETUP_RECOVERY", "apiResponse hrvToday=${sig?.optInt("hrvToday", 0)} " +
+                "sleepTodayH=${sig?.optDouble("sleepTodayH", 0.0)} " +
+                "hrvBaseline30d=${sig?.optDouble("hrvBaseline30d", 0.0)} " +
+                "sleepBaseline30d=${sig?.optDouble("sleepBaseline30d", 0.0)} " +
+                "sources=${json.optJSONArray("sources")} " +
+                "now=$nowMs")
+
+            // ── Compute warning reasons ──
+            val reasons = mutableListOf<String>()
+            if (!ftpPresent) reasons.add("FTP missing")
+            if (!hrvPresent) reasons.add("HRV missing")
+            if (json.optJSONArray("sources")?.toString()?.contains("partial") == true) {
+                if (reasons.isEmpty()) reasons.add("QBot profile incomplete")
+            }
+
             val data = ReadinessData(
                 todayFactor      = json.optDouble("todayFactor", 1.0).toFloat(),
                 ftpWatts         = json.optDouble("ftpWatts", 0.0).toFloat(),
@@ -76,8 +110,12 @@ object ReadinessManager {
                 pressureDeficit  = json.optDouble("pressureDeficit", 0.0).toFloat(),
                 baroMultiplier   = json.optDouble("baroMultiplier", 1.0).toFloat(),
                 fetchTimestampMs = System.currentTimeMillis(),
-                partial          = partial
+                partial          = json.optJSONArray("sources")?.toString()?.contains("partial") == true,
+                warningReasons   = reasons.toList(),
             )
+
+            Log.d(TAG, "[SETUP] profileComplete=${data.profileComplete} reasons=${data.warningReasons.joinToString(", ")}")
+
             saveToCache(context, data)
             data
         } catch (e: Exception) {
@@ -94,6 +132,8 @@ object ReadinessManager {
 
     fun loadCached(context: Context): ReadinessData {
         val p = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val reasonsStr = p.getString("warningReasons", "") ?: ""
+        val reasons = if (reasonsStr.isNotEmpty()) reasonsStr.split("|") else emptyList()
         return ReadinessData(
             todayFactor      = p.getFloat("todayFactor", 1.0f),
             ftpWatts         = p.getFloat("ftpWatts", 0f),
@@ -116,7 +156,8 @@ object ReadinessManager {
             pressureDeficit  = p.getFloat("pressureDeficit", 0f),
             baroMultiplier   = p.getFloat("baroMultiplier", 1.0f),
             fetchTimestampMs = p.getLong("fetchTimestampMs", 0L),
-            partial          = p.getBoolean("partial", true)
+            partial          = p.getBoolean("partial", true),
+            warningReasons   = reasons,
         )
     }
 
@@ -147,6 +188,7 @@ object ReadinessManager {
             putFloat("baroMultiplier", data.baroMultiplier)
             putLong("fetchTimestampMs", data.fetchTimestampMs)
             putBoolean("partial", data.partial)
+            putString("warningReasons", data.warningReasons.joinToString("|"))
             apply()
         }
     }

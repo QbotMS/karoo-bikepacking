@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0d1424"
+    android:padding="1dp">
+
+    <!-- ROW 1: D | IF10 | HRD | W' -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/slot_dist"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_dist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="--"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_dist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="D"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_if10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_if10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text=".00"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_if10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="IF10"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_hrd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_hrd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="---"
+                android:textColor="#F8FAFC"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_hrd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="HRD"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_wbal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_wbal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="--%"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_wbal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="W'"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0d1424" />
+
+    <!-- ROW 2: DTD | Vśr | T | W -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/slot_dtd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_dtd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="---"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_dtd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="DTD"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_avg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_avg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="00.0"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_avg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="Vsr"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_tmp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_tmp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="--"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_tmp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="T"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_wind"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#111827">
+
+            <TextView
+                android:id="@+id/tv_wind"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="N 0.0"
+                android:textColor="#F8FAFC"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_label_wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="W"
+                android:textColor="#94A3B8"
+                android:textSize="8sp"
+                android:includeFontPadding="false"
+                android:singleLine="true" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

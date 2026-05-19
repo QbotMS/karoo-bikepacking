@@ -25,7 +25,8 @@
                 android:layout_gravity="top|end"
                 android:layout_marginTop="1dp" android:layout_marginRight="2dp"
                 android:text="00.0" android:textColor="#FFFFFF"
-                android:textSize="24sp" android:textStyle="bold" android:includeFontPadding="false" />
+                android:textSize="26sp" android:textStyle="bold" android:includeFontPadding="false"
+                android:fontFamily="sans-serif-condensed" />
             <LinearLayout
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -36,7 +37,8 @@
                 <TextView android:id="@+id/tv_speed_avg"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="00.0-00.0" android:textColor="#FFFFFF"
-                    android:textSize="14sp" android:textStyle="bold" />
+                    android:textSize="14sp" android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed" />
             </LinearLayout>
         </FrameLayout>
 
@@ -56,7 +58,8 @@
                 android:layout_marginTop="1dp" android:layout_marginRight="2dp"
                 android:paddingLeft="5dp" android:paddingRight="5dp"
                 android:text="000" android:textColor="#FFFFFF"
-                android:textSize="24sp" android:textStyle="bold" android:includeFontPadding="false" />
+                android:textSize="26sp" android:textStyle="bold" android:includeFontPadding="false"
+                android:fontFamily="sans-serif-condensed" />
             <!-- NP10 (przeniesiony z WIND) -->
             <LinearLayout
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -70,7 +73,8 @@
                 <TextView android:id="@+id/tv_np10"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="000" android:textColor="#FFFFFF"
-                    android:textSize="14sp" android:textStyle="bold" />
+                    android:textSize="14sp" android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed" />
             </LinearLayout>
         </FrameLayout>
 
@@ -94,13 +98,15 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="-" android:textColor="#FFFFFF"
                     android:textSize="20sp" android:textStyle="bold"
-                    android:paddingRight="2dp" android:includeFontPadding="false" />
+                    android:paddingRight="2dp" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
                 <TextView android:id="@+id/tv_wind_speed"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="00.0" android:textColor="#FFFFFF"
-                    android:textSize="20sp" android:textStyle="bold" android:includeFontPadding="false" />
+                    android:textSize="20sp" android:textStyle="bold" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
             </LinearLayout>
-            <!-- IF30 (przeniesiony z POWER) -->
+            <!-- IF10 (przeniesiony z POWER) -->
             <LinearLayout
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="bottom|start"
@@ -109,11 +115,12 @@
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="IF" android:textColor="#8A96AD" android:textSize="9sp" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="30 " android:textColor="#8A96AD" android:textSize="7sp" />
-                <TextView android:id="@+id/tv_if30"
+                    android:text="10 " android:textColor="#8A96AD" android:textSize="7sp" />
+                <TextView android:id="@+id/tv_if10"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text=".00" android:textColor="#FFFFFF"
-                    android:textSize="14sp" android:textStyle="bold" />
+                    android:textSize="14sp" android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed" />
             </LinearLayout>
             <!-- Wpływ wiatru — prawa strona dołu, bez etykiety -->
             <TextView
@@ -122,7 +129,8 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginBottom="3dp" android:layout_marginRight="3dp"
                 android:text="0.0" android:textColor="#FFFFFF"
-                android:textSize="14sp" android:textStyle="bold" />
+                android:textSize="14sp" android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed" />
         </FrameLayout>
     </LinearLayout>
 
@@ -147,7 +155,8 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginRight="4dp" android:layout_marginBottom="3dp"
                 android:text="Z0" android:textColor="#FFFFFF"
-                android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+                android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false"
+                android:fontFamily="sans-serif-condensed" />
         </FrameLayout>
 
         <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
@@ -163,7 +172,8 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginRight="4dp" android:layout_marginBottom="3dp"
                 android:text="000" android:textColor="#FFFFFF"
-                android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+                android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false"
+                android:fontFamily="sans-serif-condensed" />
         </FrameLayout>
 
         <FrameLayout android:layout_width="2dp" android:layout_height="match_parent" android:background="#04080F" />
@@ -183,11 +193,13 @@
                 <TextView android:id="@+id/tv_w_prime"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="--" android:textColor="#22C55E"
-                    android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+                    android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
                 <TextView android:id="@+id/tv_w_prime_pct"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="" android:textColor="#22C55E"
-                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false" />
+                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
             </LinearLayout>
         </FrameLayout>
 
@@ -208,15 +220,18 @@
                 <TextView android:id="@+id/tv_grade_sign"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="+" android:textColor="#FFFFFF"
-                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false" />
+                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
                 <TextView android:id="@+id/tv_grade"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0.0" android:textColor="#FFFFFF"
-                    android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false" />
+                    android:textSize="18sp" android:textStyle="bold" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
                 <TextView android:id="@+id/tv_grade_pct"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="%" android:textColor="#FFFFFF"
-                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false" />
+                    android:textSize="15sp" android:textStyle="bold" android:includeFontPadding="false"
+                    android:fontFamily="sans-serif-condensed" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

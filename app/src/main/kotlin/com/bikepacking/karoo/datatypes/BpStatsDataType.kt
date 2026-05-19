@@ -2,9 +2,13 @@ package com.bikepacking.karoo.datatypes
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
+import android.view.View
 import android.widget.RemoteViews
 import com.bikepacking.karoo.R
 import com.bikepacking.karoo.RideEngine
+import com.bikepacking.karoo.field.StatsFormattedValue
+import com.bikepacking.karoo.field.StatsValueFormatter
 import io.hammerhead.karooext.extension.DataTypeImpl
 import io.hammerhead.karooext.internal.ViewEmitter
 import io.hammerhead.karooext.models.UpdateGraphicConfig
@@ -16,6 +20,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+private const val TAG = "BP_STATS"
+private const val RENDER_TAG = "QBOT_RENDER"
+
 class BpStatsDataType(
     private val rideEngine: RideEngine,
     extension: String
@@ -24,117 +31,117 @@ class BpStatsDataType(
     private var viewScope: CoroutineScope? = null
 
     override fun startView(context: Context, config: ViewConfig, emitter: ViewEmitter) {
-        // Anuluj poprzedni scope — zapobiega duplikacji coroutines
         viewScope?.cancel()
         val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         viewScope = scope
-
-        // Ukryj nagłówek Karoo OS (tak jak BP LIVE i BP ETA)
         emitter.onNext(UpdateGraphicConfig(showHeader = false))
 
         scope.launch {
             rideEngine.state.collectLatest { state ->
                 try {
+                    Log.d(RENDER_TAG, "STATS bind start")
                     val v = RemoteViews(context.packageName, R.layout.field_stats)
 
-                    // ── WIERSZ 1: NP | IF | VI ─────────────────────────────
-                    v.setTextViewText(R.id.tv_np,
-                        if (state.npWholeWatts > 0) "${state.npWholeWatts}" else "--")
-
-                    v.setTextViewText(R.id.tv_if,
-                        if (state.ifWholeRide > 0f) "%.2f".format(state.ifWholeRide) else "--")
-
-                    v.setTextViewText(R.id.tv_vi,
-                        if (state.viValue > 0f) "%.2f".format(state.viValue) else "--")
-                    // VI kolor: zielony gdy <1.05, żółty 1.05-1.10, czerwony >1.10
+                    // ROW 1: NP | IF | VI
+                    bindUnit(v, R.id.tv_np, R.id.tv_np_unit, StatsValueFormatter.npW(state.npWholeWatts))
+                    bindUnit(v, R.id.tv_if, R.id.tv_if_unit, StatsValueFormatter.ifValue(state.ifWholeRide))
+                    bindUnit(v, R.id.tv_vi, R.id.tv_vi_unit, StatsValueFormatter.vi(state.viValue))
                     v.setTextColor(R.id.tv_vi, viColor(state.viValue))
 
-                    // ── WIERSZ 2: TSS | CALORIES | DECOUPLING ──────────────
-                    v.setTextViewText(R.id.tv_tss,
-                        if (state.tssValue > 0f) "${state.tssValue.toInt()}" else "--")
+                    // ROW 2: CARB IN | FLUID IN | KCAL
+                    bindUnit(v, R.id.tv_carb, R.id.tv_carb_unit, StatsValueFormatter.carbsG(state.carbsGPerH))
+                    bindUnit(v, R.id.tv_fluid, R.id.tv_fluid_unit, StatsValueFormatter.fluidL(state.fluidLPerH))
+                    bindUnit(v, R.id.tv_cal, R.id.tv_cal_unit, StatsValueFormatter.calories(state.caloriesKcal))
 
-                    v.setTextViewText(R.id.tv_calories,
-                        if (state.caloriesKcal > 0) "${state.caloriesKcal}" else "--")
+                    // ROW 3: TSS | ΔV | RSRV
+                    bindUnit(v, R.id.tv_tss, R.id.tv_tss_unit, StatsValueFormatter.tss(state.tssValue))
 
-                    val decStr = if (state.decouplingPercent != 0f)
-                        "%+.1f".format(state.decouplingPercent) else "--"
-                    v.setTextViewText(R.id.tv_decoupling, decStr)
-                    v.setTextColor(R.id.tv_decoupling, decouplingColor(state.decouplingPercent))
+                    // ΔV - deadline delta
+                    val dltavStatus = state.deadlineStatus
+                    val dltavDelta = state.deadlineDeltaKph
+                    val dltavFormatted = if (dltavStatus == "--" || state.etaTimestamp <= 0L || state.deadlineTimestamp <= 0L) {
+                        StatsFormattedValue("--")
+                    } else {
+                        StatsValueFormatter.deadlineDeltaValue(dltavDelta, dltavStatus)
+                    }
+                    bindUnit(v, R.id.tv_dltav, R.id.tv_dltav_unit, dltavFormatted)
+                    // Color only the value, not background
+                    val dltavColor = when {
+                        dltavStatus == "--" -> Color.WHITE
+                        dltavStatus == "OK" || dltavDelta <= 0f -> Color.parseColor("#22C55E") // green
+                        dltavDelta > 2.5f || dltavStatus == "LATE" || dltavStatus == "IMPOSSIBLE" -> Color.parseColor("#EF4444") // red
+                        dltavDelta > 1.0f -> Color.parseColor("#F97316") // orange
+                        else -> Color.parseColor("#F59E0B") // amber
+                    }
+                    v.setTextColor(R.id.tv_dltav, dltavColor)
 
-                    // ── WIERSZ 3: D+ DONE | D+ LEFT | TIME LEFT ────────────
-                    v.setTextViewText(R.id.tv_ascent_done,
-                        if (state.ascentDoneM >= 0) "${state.ascentDoneM}" else "--")
+                    bindUnit(v, R.id.tv_rsrv, R.id.tv_rsrv_unit, StatsValueFormatter.reserveNumber(state.rideReservePercent))
+                    v.setTextColor(R.id.tv_rsrv, reserveColor(state.rideReservePercent))
 
-                    v.setTextViewText(R.id.tv_ascent_left,
-                        if (state.hasRoute) "${state.ascentLeftM}" else "--")
+                    // ROW 4: UP | UP LEFT | ETA
+                    bindUnit(v, R.id.tv_ascent_done, R.id.tv_ascent_done_unit, StatsValueFormatter.ascentM(state.ascentDoneM))
+                    bindUnit(v, R.id.tv_ascent_left, R.id.tv_ascent_left_unit,
+                        StatsValueFormatter.ascentLeftM(state.ascentLeftM, state.hasRoute))
+                    bindUnit(v, R.id.tv_eta, R.id.tv_eta_unit, StatsValueFormatter.etaTime(state.etaTimestamp))
 
-                    v.setTextViewText(R.id.tv_time_left,
-                        if (state.hasRoute && state.timeToFinishSec > 0L)
-                            formatTime(state.timeToFinishSec) else "--")
+                    // ROW 5: V AVG TOTAL | TIME TOTAL | TIME STOP
+                    val elapsedAvg = if (state.distanceKm > 0f && state.elapsedSec > 0L) {
+                        (state.distanceKm / (state.elapsedSec / 3600f)).coerceIn(0f, 120f)
+                    } else 0f
+                    bindUnit(v, R.id.tv_all, R.id.tv_all_unit, StatsValueFormatter.avgAll(elapsedAvg))
+                    bindUnit(v, R.id.tv_mov, R.id.tv_mov_unit, StatsValueFormatter.elapsedTime(state.elapsedSec))
+                    val stoppedSec = (state.elapsedSec - state.movingSec).coerceAtLeast(0L)
+                    bindUnit(v, R.id.tv_stop, R.id.tv_stop_unit, StatsValueFormatter.stopTime(stoppedSec))
 
-                    // ── WIERSZ 4: CARBS | FLUID | STOPPED ─────────────────
-                    v.setTextViewText(R.id.tv_carbs,
-                        if (state.carbsGPerH > 0) "${state.carbsGPerH}" else "--")
-
-                    v.setTextViewText(R.id.tv_fluid,
-                        if (state.fluidLPerH > 0f) "%.2f".format(state.fluidLPerH) else "--")
-
-                    val elapsed = normalizeDisplayTimeSec(state.elapsedSec)
-                    val moving = normalizeDisplayTimeSec(state.movingSec)
-                    val stoppedSec = (elapsed - moving).coerceAtLeast(0L)
-                    v.setTextViewText(R.id.tv_stopped, formatTime(stoppedSec))
-
-                    // ── WIERSZ 5: RIDE RESERVE | TODAY FACTOR ─────────────
-                    val reserve = state.rideReservePercent
-                    val reserveStr = if (reserve >= 0) "${reserve}%" else "${reserve}%"
-                    v.setTextViewText(R.id.tv_reserve, reserveStr)
-                    v.setTextColor(R.id.tv_reserve, reserveColor(reserve))
-
-                    // Pasek postępu — ProgressBar (RemoteViews safe)
-                    val progress = reserve.coerceIn(0, 100)
-                    v.setProgressBar(R.id.reserve_progress, 100, progress, false)
-
-                    v.setTextViewText(R.id.tv_today_factor,
-                        "%.2f".format(state.todayFactor))
+                    // ROW 6: BURN BAT | BAT LEFT | RD BAT
+                    bindUnit(v, R.id.tv_bat, R.id.tv_bat_unit, StatsValueFormatter.batteryPerHour(state.batteryDropPerHour))
+                    bindUnit(v, R.id.tv_left, R.id.tv_left_unit, StatsValueFormatter.batteryRuntime(state.batteryRuntimeSec))
+                    bindUnit(v, R.id.tv_tmp, R.id.tv_tmp_unit, StatsValueFormatter.rdBat(state.rearDerailleurBatteryPercent))
 
                     emitter.updateView(v)
+                    Log.d(RENDER_TAG, "STATS bind ok")
 
-                } catch (_: Exception) {
-                    // Cichy catch — nie crashujemy pola przy błędzie renderowania
+                } catch (t: Throwable) {
+                    Log.e(RENDER_TAG, "STATS render failed", t)
+                    runCatching { emitter.updateView(fallbackRemoteViews(context, "STATS ERR")) }
+                        .onFailure { Log.e(RENDER_TAG, "STATS fallback render failed", it) }
                 }
             }
         }
     }
 
-    // ── Kolory ────────────────────────────────────────────────────────────────
+    private fun fallbackRemoteViews(context: Context, text: String): RemoteViews {
+        return RemoteViews(context.packageName, R.layout.render_error).apply {
+            setTextViewText(R.id.tv_render_error, text)
+        }
+    }
+
+    private fun bindUnit(v: RemoteViews, valueId: Int, unitId: Int, fv: StatsFormattedValue) {
+        v.setTextViewText(valueId, fv.main)
+        if (fv.unit != null && fv.main != "--") {
+            v.setTextViewText(unitId, fv.unit)
+            v.setViewVisibility(unitId, View.VISIBLE)
+        } else {
+            v.setViewVisibility(unitId, View.GONE)
+        }
+    }
 
     private fun viColor(vi: Float): Int = when {
         vi <= 0f   -> Color.WHITE
         vi < 1.05f -> Color.WHITE
-        vi < 1.10f -> Color.parseColor("#F59E0B")  // żółty
-        else       -> Color.parseColor("#EF4444")  // czerwony
+        vi < 1.10f -> Color.parseColor("#F59E0B")
+        else       -> Color.parseColor("#EF4444")
     }
 
     private fun decouplingColor(dec: Float): Int = when {
-        dec < 3f  -> Color.parseColor("#4ADE80")   // zielony — ok
-        dec < 7f  -> Color.parseColor("#F59E0B")   // żółty — uwaga
-        else      -> Color.parseColor("#EF4444")   // czerwony — problem
+        dec < 3f  -> Color.parseColor("#4ADE80")
+        dec < 7f  -> Color.parseColor("#F59E0B")
+        else      -> Color.parseColor("#EF4444")
     }
 
     private fun reserveColor(reserve: Int): Int = when {
-        reserve >= 40 -> Color.parseColor("#22C55E")   // zielony
-        reserve >= 20 -> Color.parseColor("#F59E0B")   // pomarańczowy
-        else          -> Color.parseColor("#EF4444")   // czerwony — opary
-    }
-
-    private fun normalizeDisplayTimeSec(value: Long): Long {
-        return if (value > 600_000L) value / 1000L else value
-    }
-
-    // ── Formatowanie czasu h:mm ───────────────────────────────────────────────
-    private fun formatTime(sec: Long): String {
-        val h = sec / 3600
-        val m = (sec % 3600) / 60
-        return "${h}:${m.toString().padStart(2, '0')}"
+        reserve >= 40 -> Color.parseColor("#22C55E")
+        reserve >= 20 -> Color.parseColor("#F59E0B")
+        else          -> Color.parseColor("#EF4444")
     }
 }

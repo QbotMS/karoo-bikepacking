@@ -1,7 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#050916"
+    android:padding="1dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/lu_cell_dst"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⇥"
+                android:textColor="#8A96AD"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_dst"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/lu_cell_temp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="°"
+                android:textColor="#8A96AD"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_temp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="31sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/lu_cell_wbal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="▰"
+                android:textColor="#8A96AD"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_wbal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#22C55E"
+                android:textSize="31sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/lu_cell_gear"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⚙"
+                android:textColor="#8A96AD"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_gear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/lu_cell_dtd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⚑"
+                android:textColor="#8A96AD"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_dtd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/lu_cell_eta"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="◷"
+                android:textColor="#8A96AD"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_eta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/lu_cell_np10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="↗"
+                android:textColor="#8A96AD"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_np10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="31sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/lu_cell_grade"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
+            android:background="#090E1C">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⌁"
+                android:textColor="#8A96AD"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/lu_grade"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+    </LinearLayout>
 </LinearLayout>

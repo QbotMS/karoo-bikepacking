@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bikepacking ETA</string>
-    <string name="extension_name">Bikepacking ETA</string>
-    <string name="field_name">Bikepacking Full</string>
+    <string name="app_name">QExt</string>
+    <string name="extension_name">QExt</string>
+    <string name="field_name">QExt Full</string>
     <string name="field_description">ETA, smart avg, power, HR, grade for bikepacking</string>
 </resources>

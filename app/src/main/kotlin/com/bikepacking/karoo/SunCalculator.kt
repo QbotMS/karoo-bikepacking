@@ -3,7 +3,12 @@ package com.bikepacking.karoo
 import kotlin.math.*
 
 object SunCalculator {
-    fun civilTwilightMs(latDeg: Double, lonDeg: Double, dateMs: Long): Long {
+
+    fun civilDuskMs(latDeg: Double, lonDeg: Double, dateMs: Long): Long = civilTwilightMs(latDeg, lonDeg, dateMs, rise = false)
+
+    fun civilDawnMs(latDeg: Double, lonDeg: Double, dateMs: Long): Long = civilTwilightMs(latDeg, lonDeg, dateMs, rise = true)
+
+    private fun civilTwilightMs(latDeg: Double, lonDeg: Double, dateMs: Long, rise: Boolean): Long {
         val jd = dateMs / 86_400_000.0 + 2_440_587.5
         val n = floor(jd - 2_451_545.0 + 0.0008).toLong().toDouble()
         val g = (357.5291 + 0.98560028 * n) % 360.0
@@ -21,7 +26,7 @@ object SunCalculator {
         val H = acos(cosH) * 180.0 / PI
         val jStar = 2_451_545.0 + 0.0009 + (-lonDeg / 360.0) + n
         val jTransit = jStar + 0.0053 * sin(gRad) - 0.0069 * sin(2 * lambdaRad)
-        val jSet = jTransit + H / 360.0
-        return ((jSet - 2_440_587.5) * 86_400_000.0).toLong()
+        val jEvent = if (rise) jTransit - H / 360.0 else jTransit + H / 360.0
+        return ((jEvent - 2_440_587.5) * 86_400_000.0).toLong()
     }
 }

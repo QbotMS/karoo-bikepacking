@@ -1,5 +1,7 @@
 package com.bikepacking.karoo
 
+import com.bikepacking.karoo.message.RideMessage
+
 data class RideState(
     val speedKph: Float = 0f,
     val powerWatts: Int = 0,
@@ -12,7 +14,7 @@ data class RideState(
     val movingSec: Long = 0L,
     val hasRoute: Boolean = false,
     val np10Watts: Int = 0,
-    val if30Value: Float = 0f,
+    val if10Value: Float = 0f,
     val ifValue: Float = 0f,
     val cadenceAvg30sRpm: Int = 0,
     val smartAvgKph: Float = 0f,
@@ -21,6 +23,8 @@ data class RideState(
     val etaTimestamp: Long = 0L,
     val requiredSpeedKph: Float = 0f,
     val deadlineTimestamp: Long = 0L,
+    val deadlineDeltaKph: Float = 0f,  // positive = need faster, negative/zero = OK
+    val deadlineStatus: String = "--", // OK/LATE/IMPOSSIBLE
     val civilTwilightTimestamp: Long = 0L,
     val stopRateMinPerKm: Float = 0f,
     val isOverDeadline: Boolean = false,
@@ -30,6 +34,7 @@ data class RideState(
     val windDirectionDeg: Int = 0,
     val windArrow: String = "–",
     val windImpactKph: Float = 0f,
+    val headwindError: Int = 0, // 0=OK, -1=no GPS, -2=no weather, -3=not configured
     val lastLat: Double = 0.0,
     val lastLon: Double = 0.0,
     val temperatureCelsius: Float? = null,
@@ -49,9 +54,21 @@ data class RideState(
     val carbsGPerH: Int = 0,
     val fluidLPerH: Float = 0f,
     val todayFactor: Float = 1.0f,
+    val batteryDropPerHour: Float = 0f,
+    val batteryRuntimeSec: Long = 0L,
     val rideReservePercent: Int = 0,
+    val batteryPercent: Int = 0,
+    val rearDerailleurBatteryPercent: Int? = null,
+    // HRD: Local HR Drift
+    val hrdStatus: String = "WAIT",
+    val hrdPct: Float = 0f,
+    val hrdPhase: String = "WAIT",
+    val hrdValid: Boolean = false,
+    val hrdReason: String = "",
     // W' Balance
     val wBalancePercent: Int = -1,
+    // Active ride message
+    val activeRideMessage: RideMessage? = null,
 )
 
 enum class SpeedTrend { INCREASING, NEUTRAL, DECREASING }

@@ -5,22 +5,29 @@
     icon="@drawable/ic_bp">
 
     <DataType
-        typeId="BP_LIVE"
-        displayName="BP Live"
-        description="Speed, power, HR, grade"
+        typeId="BP_LIVE3X2"
+        displayName="LIVE"
+        description="Speed, power, HR, cadence, grade, gear"
         graphical="true"
         icon="@drawable/ic_bp" />
 
     <DataType
-        typeId="BP_ETA"
-        displayName="BP ETA"
-        description="ETA, smart avg, required speed"
+        typeId="BP_DYN3X2"
+        displayName="DYN"
+        description="IF10/NP10, W'bal, Wind, Avg, Dist, Temp/ETA"
+        graphical="true"
+        icon="@drawable/ic_bp" />
+
+    <DataType
+        typeId="BP_DYN3X2MSG"
+        displayName="DYNMSG"
+        description="DYN with dynamic messages layer"
         graphical="true"
         icon="@drawable/ic_bp" />
 
     <DataType
         typeId="BP_STATS"
-        displayName="BP Stats"
+        displayName="STATS"
         description="NP, TSS, Calories, Decoupling, Reserve"
         graphical="true"
         icon="@drawable/ic_bp" />

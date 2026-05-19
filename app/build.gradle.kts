@@ -32,4 +32,6 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
+    testImplementation(libs.junit)
+    testImplementation(libs.gson)
 }

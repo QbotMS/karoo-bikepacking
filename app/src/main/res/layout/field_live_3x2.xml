@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0d1424"
+    android:padding="1dp">
+
+    <!-- ROW 1: Gear / Cadence / Grade (non-bold) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/slot_gear"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#1F2933">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⚙"
+                android:textColor="#8A96AD"
+                android:textSize="11sp"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_gear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_cadence"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#1F2933">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="↻"
+                android:textColor="#8A96AD"
+                android:textSize="11sp"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_cadence"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="000"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_grade"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#1F2933">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="▲"
+                android:textColor="#8A96AD"
+                android:textSize="11sp"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_grade"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="+0.0"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0d1424" />
+
+    <!-- ROW 2: HR / Power / Speed (bold, bottom-aligned) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/slot_hr"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#1F2933">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="♥"
+                android:textColor="#8A96AD"
+                android:textSize="11sp"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_hr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="000"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_power"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#1F2933">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⚡"
+                android:textColor="#8A96AD"
+                android:textSize="11sp"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_power"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="000"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#0d1424" />
+
+        <FrameLayout
+            android:id="@+id/slot_speed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#1F2933">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:text="⌁"
+                android:textColor="#8A96AD"
+                android:textSize="11sp"
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                android:paddingEnd="4dp"
+                android:text="00.0"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>
